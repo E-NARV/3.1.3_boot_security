@@ -1,8 +1,8 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
@@ -21,41 +21,47 @@ public class AdminController {
     }
 
     @GetMapping
-    public String index(Model model) {
-        model.addAttribute("users", userService.findAll());
-        return "admin/index"; // Здесь ссылаемся на страницу login.html
+    public ModelAndView index() {
+        ModelAndView mav = new ModelAndView("admin/index");
+        mav.addObject("users", userService.findAll());
+        mav.addObject("allRoles", roleService.findAll());
+        mav.addObject("user", new User());
+        return mav;
     }
 
     @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user, Model model) { // Создаем "пустого" юзера
-        model.addAttribute("allRoles", roleService.findAll());
-        return "admin/new"; // Здесь ссылаемся на страницу new.html
+    public ModelAndView newUser() {
+        ModelAndView mav = new ModelAndView("admin/new");
+        mav.addObject("user", new User());
+        mav.addObject("allRoles", roleService.findAll());
+        return mav;
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("user") User user,
-                         @RequestParam(value = "roleId", required = false) List<Long> roleId) {
-        userService.create(user, roleId);
-        return "redirect:/admin";
+    public ModelAndView create(@ModelAttribute("user") User user,
+                               @RequestParam(value = "roleIds", required = false) List<Long> roleIds) {
+        userService.create(user, roleIds);
+        return new ModelAndView("redirect:/admin");
     }
 
     @GetMapping("/edit")
-    public String edit(@RequestParam("id") Long id, Model model) {
-        model.addAttribute("user", userService.findById(id));
-        model.addAttribute("allRoles", roleService.findAll());
-        return "admin/edit"; // Здесь ссылаемся на страницу edit.html
+    public ModelAndView edit(@RequestParam("id") Long id) {
+        ModelAndView mav = new ModelAndView("admin/edit");
+        mav.addObject("user", userService.findById(id));
+        mav.addObject("allRoles", roleService.findAll());
+        return mav;
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute("user") User user,
-                         @RequestParam(value = "roleId", required = false) List<Long> roleId) {
-        userService.update(user, roleId);
-        return "redirect:/admin";
+    public ModelAndView update(@ModelAttribute("user") User user,
+                               @RequestParam(value = "roleIds", required = false) List<Long> roleIds) {
+        userService.update(user, roleIds);
+        return new ModelAndView("redirect:/admin");
     }
 
     @PostMapping("/delete")
-    public String delete(@RequestParam("id") Long id) {
+    public ModelAndView delete(@RequestParam("id") Long id) {
         userService.delete(id);
-        return "redirect:/admin";
+        return new ModelAndView("redirect:/admin");
     }
 }
