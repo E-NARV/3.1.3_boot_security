@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.6.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>ru.kata</groupId>
 	<artifactId>spring-boot_security-demo</artifactId>
@@ -28,7 +28,6 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- для sec:authorize и удобного logout/ролей в thymeleaf -->
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity5</artifactId>

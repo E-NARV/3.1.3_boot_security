@@ -21,18 +21,16 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // Создаём роли, если их нет
         Role adminRole = roleService.findByName("ROLE_ADMIN")
                 .orElseGet(() -> roleService.save(new Role("ROLE_ADMIN")));
 
         Role userRole = roleService.findByName("ROLE_USER")
                 .orElseGet(() -> roleService.save(new Role("ROLE_USER")));
 
-        // Создаём админа, если его нет
         userService.findByUsername("admin").orElseGet(() -> {
             User admin = new User();
             admin.setUsername("admin");
-            admin.setPassword("admin"); // Пароль закодируется в create()
+            admin.setPassword("admin");
             admin.setName("Admin");
             admin.setSurname("Root");
             admin.setAge(30);
@@ -41,11 +39,10 @@ public class DataInitializer implements CommandLineRunner {
             return admin;
         });
 
-        // Создаём юзера, если его нет
         userService.findByUsername("user").orElseGet(() -> {
             User user = new User();
             user.setUsername("user");
-            user.setPassword("user"); // Пароль закодируется в create()
+            user.setPassword("user");
             user.setName("User");
             user.setSurname("Simple");
             user.setAge(25);

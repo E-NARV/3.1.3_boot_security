@@ -39,8 +39,8 @@ public class AdminController {
 
     @PostMapping("/create")
     public ModelAndView create(@ModelAttribute("user") User user,
-                               @RequestParam(value = "roleIds", required = false) List<Long> roleIds) {
-        userService.create(user, roleIds);
+                               @RequestParam(value = "roleId", required = false) List<Long> roleId) {
+        userService.create(user, roleId);
         return new ModelAndView("redirect:/admin");
     }
 
@@ -54,8 +54,8 @@ public class AdminController {
 
     @PostMapping("/update")
     public ModelAndView update(@ModelAttribute("user") User user,
-                               @RequestParam(value = "roleIds", required = false) List<Long> roleIds) {
-        userService.update(user, roleIds);
+                               @RequestParam(value = "roleId", required = false) List<Long> roleId) {
+        userService.update(user, roleId);
         return new ModelAndView("redirect:/admin");
     }
 

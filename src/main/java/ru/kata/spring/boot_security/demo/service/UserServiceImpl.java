@@ -13,7 +13,6 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     private final RoleService roleService;
@@ -28,18 +27,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<User> findAll() {
         return userDao.findAll();
     }
 
     @Override
-    @Transactional(readOnly = true)
     public User findById(Long id) {
         return userDao.findById(id);
     }
 
     @Override
+    @Transactional
     public void create(User user, List<Long> roleId) {
         user.setRoles(resolveRoles(roleId));
 
@@ -52,10 +50,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void update(User user, List<Long> roleId) {
         User old = userDao.findById(user.getId());
         if (old == null) {
-            throw new IllegalArgumentException("User not found: id=" + user.getId());
+            throw new IllegalArgumentException("User not found: id = " + user.getId());
         }
 
         user.setRoles(resolveRoles(roleId));
@@ -70,12 +69,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         userDao.deleteById(id);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<User> findByUsername(String username) {
         return userDao.findByUsername(username);
     }

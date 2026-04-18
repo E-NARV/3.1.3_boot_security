@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class RoleServiceImpl implements RoleService {
     private final RoleDao roleDao;
 
@@ -18,24 +17,22 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Role> findAll() {
         return roleDao.findAll();
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Role> findById(Iterable<Long> id) {
         return roleDao.findById(id);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<Role> findByName(String name) {
         return roleDao.findByName(name);
     }
 
     @Override
+    @Transactional
     public Role save(Role role) {
         return roleDao.save(role);
     }

@@ -19,9 +19,9 @@ public class UserController {
     }
 
     @GetMapping
-    public String userPage(Model model, Principal principal) { // Получаем текущего юзера
-        User user = userService.findByUsername(principal.getName()).orElseThrow(); // Если юзера нет, выбрасываем исключение
+    public String userPage(Model model, Principal principal) {
+        User user = userService.findByUsername(principal.getName()).orElseThrow();
         model.addAttribute("user", user);
-        return "user"; // Здесь ссылаемся на страницу user.html
+        return "user";
     }
 }

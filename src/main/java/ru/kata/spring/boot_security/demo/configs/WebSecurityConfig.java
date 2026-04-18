@@ -28,18 +28,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/login", "/").permitAll() // Страница логина доступна всем
-                .antMatchers("/admin/**").hasRole("ADMIN") // Только админ
-                .antMatchers("/user").hasAnyRole("USER", "ADMIN") // Только юзер и админ
+                .antMatchers("/login", "/").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login") // Кастомная страница логина
+                .loginPage("/login")
                 .successHandler(successUserHandler)
                 .permitAll()
                 .and()
                 .logout()
-                .logoutUrl("/logout") // Кастомная страница логаута
+                .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
                 .permitAll();
     }
